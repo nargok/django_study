@@ -1,11 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 
-def index(request):
-  if 'msg' in request.GET:
-    msg = request.GET['msg']
-    result = 'you typed: "' + msg + '".'
-  else:
-    result = 'Please send message parameter!'
+def index(request, id, nickname):
+  result = 'your id: ' + str(id) + ', name: "' + nickname + '".'
 
   return HttpResponse(result)
