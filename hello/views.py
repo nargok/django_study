@@ -6,9 +6,10 @@ from .forms import FriendForm
 from .forms import FindForm
 
 def index(request):
-  data = Friend.objects.all()
+  data = Friend.objects.all().order_by('age').reverse()
   params = {
     'title': 'Hello',
+    'message': '',
     'data': data,
   }
 
