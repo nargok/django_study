@@ -10,7 +10,14 @@
 <body>
     <h1>{{title}}</h1>
     <table>
-        {{data|safe}}
+        <tr>
+            <th>data</th>
+        </tr>
+        {% for item in data %}
+            <tr>
+                <td>{{item}}</td>
+            </tr>
+        {% endfor %}
     </table>
 </body>
 </html>
