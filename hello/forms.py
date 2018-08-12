@@ -1,5 +1,5 @@
 from django import forms
-from .models import Friend
+from .models import Friend, Message
 
 class FriendForm(forms.ModelForm):
   class Meta:
@@ -42,3 +42,8 @@ class HelloForm(forms.Form):
   gender = forms.BooleanField(label='Gender', required=False)
   age = forms.IntegerField(label='Age')
   birthday = forms.DateField(label='Birth')
+
+class MessageForm(forms.ModelForm):
+  class Meta:
+    model = Message
+    fields = ['title', 'content', 'friend']
