@@ -60,7 +60,8 @@ def find(request):
     msg = 'search result:',
     form = FindForm(request.POST)
     str = request.POST['find']
-    data = Friend.objects.filter(name__contains=str)
+    list = str.split()
+    data = Friend.objects.all()[int(list[0]):int(list[1])]
   else:
     msg = 'search words...',
     form = FindForm()
