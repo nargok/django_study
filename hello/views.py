@@ -93,10 +93,11 @@ def check(request):
   params = {
     'title': 'Hello',
     'message': 'check validation',
-    'form': CheckForm(),
+    'form': FriendForm(),
   }
   if (request.method == 'POST'):
-    form = CheckForm(request.POST)
+    obj = Friend()
+    form = FriendForm(request.POST, instance=obj)
     if (form.is_valid()):
       params['message'] = 'OK'
     else:

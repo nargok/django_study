@@ -10,8 +10,15 @@
 <body>
     <h1>{{title}}</h1>
     <p>{{message}}</p>
+    <hr>
+    <ol>
+    {% for item in form %}
+        <li>
+            {{ item.name }} ({{ item.value }}) : {{ item.errors.as_text }}
+        </li>
+    {% endfor %}
+    </ol>
     <table>
-
         <form action="{% url 'check' %}" method="post">
             {% csrf_token %}
             {{ form.as_table }}
