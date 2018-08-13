@@ -18,7 +18,7 @@ def index(request):
   (public_user, public_group) = get_public()
 
   # POST送信時の処理
-  if request.method == 'POST:
+  if request.method == 'POST':
 
     # Groupのチェックを更新した時の処理
     if request.POST['mode'] == '__check_form__':
@@ -65,9 +65,9 @@ def index(request):
       'search_form': searchform,
     }
 
-  return render(requestm 'sns/index.html', params)
+  return render(request, 'sns/index.html', params)
 
-@logoin_required(login_url='/admin/login/')
+@login_required(login_url='/admin/login/')
 def groups(request):
   # 自分が登録したFriendを取得
   friends = Friend.objects.filter(owner=request.user)
@@ -89,7 +89,7 @@ def groups(request):
         vlist.append(item.user.username)
       # フォームの用意
       groupsform = GroupSelectForm(request.user, request.POST)
-      friendform = FriendsForm(request,user, friends=friends, vals=vlist)
+      friendform = FriendsForm(request.user, friends=friends, vals=vlist)
 
     # Friendsのチェック更新時の処理
     if request.POST['mode'] == '__friends_form__':
@@ -221,7 +221,7 @@ def share(request, share_id):
   share = Message.objects.get(id=share_id)
 
   # POST送信時の処理
-  if request.method == 'POST:
+  if request.method == 'POST':
     # 送信内容を取得
     gr_name = request.POST['groups']
     content = request.POST['content']
@@ -277,3 +277,39 @@ def good(request, good_id):
   # メッセージを設定
   messages.success(request, 'メッセージにGoodしました')
   return redirect(to='/sns')
+
+# 指定されたグループおよび検索文字によるMessageの取得
+def get_your_group_message(owner, glist, find):
+  # publicの取得
+  (public_user, public_group) = get_public()
+  # チェックされたGroupの取得
+  groups = Group.objects.filter(Q(owner=owner) \
+    |Q(owner=public_user)).filter(title__in=glist)
+  # Groupに含まれるFriendの取得
+  me_friends = Friend.objects.filter(group__in=groups)
+  # FriendのUserをリストにまとめる
+  me_users = []
+  for f in me_friends:
+    me_users.append(f.user)
+  # UserリストのUserがつくったGroupの取得
+  his_groups = Group.objects.filter(owner__in=me_users)
+  his_friends = Friend.objects.filter(user=owner) \
+                              .filter(group__in=his_groups)
+  me_groups = []
+  for hf in his_friends:
+    me_groups.append(hf.group)
+  # groupがgroupsに含まれるか、me_groupsに含まれるMessageの取得
+  if find == None:
+    messages = Message.objects.filter(Q(group__in=groups) \
+                                      |Q(group__in=me_groups))[:100]
+  else:
+    messages = Message.objects.filter(Q(group__in=groups) \
+                  |Q(group__in=me_groups)) \
+                  .filter(content__contains=find)[:100]
+  return messages
+
+# publicなUserとGroupを取得する
+def get_public():
+  public_user = User.objects.filter(username='public').first()
+  public_group = Group.objects.filter(owner=public_user).first()
+  return (public_user, public_group)
