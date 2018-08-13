@@ -44,26 +44,26 @@ def index(request):
       # メッセージを取得
       messages = get_your_group_message(request.user, glist, request.POST['search'])
 
-    # GETアクセス時の処理
-    else:
-      # フォームの用意
-      searchform = SearchForm()
-      checkform = GroupCheckForm(request.user)
-      # Groupのリストを取得
-      gps = Group.objects.filter(owner=request.user)
-      glist = [public_group]
-      for item in gps:
-        glist.append(item)
-      # メッセージの取得
-      messages = get_your_group_message(request.user, glist, None)
+  # GETアクセス時の処理
+  else:
+    # フォームの用意
+    searchform = SearchForm()
+    checkform = GroupCheckForm(request.user)
+    # Groupのリストを取得
+    gps = Group.objects.filter(owner=request.user)
+    glist = [public_group]
+    for item in gps:
+      glist.append(item)
+    # メッセージの取得
+    messages = get_your_group_message(request.user, glist, None)
 
-    # 共通処理
-    params = {
-      'login_user': request.user,
-      'contents': messages,
-      'check_form': checkform,
-      'search_form': searchform,
-    }
+  # 共通処理
+  params = {
+    'login_user': request.user,
+    'contents': messages,
+    'check_form': checkform,
+    'search_form': searchform,
+  }
 
   return render(request, 'sns/index.html', params)
 
