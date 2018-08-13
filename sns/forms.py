@@ -51,7 +51,7 @@ class GroupSelectForm(forms.Form):
       )
 
 # Friendのチェックボックスフォーム
-class FriendForm(forms.Form):
+class FriendsForm(forms.Form):
   def __init__(self, user, friend=[], vals=[], *args, **kwargs):
     super(FriendForm, self).__init__(*args, **kwargs)
     self.fields['friends'] = forms.MultipleChoiceField(
