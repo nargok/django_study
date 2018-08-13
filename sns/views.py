@@ -128,7 +128,7 @@ def groups(request):
   params = {
     'login_user': request.user,
     'groups_form': groupsform,
-    'friends_form': friendform,
+    'friends_form': friendsform,
     'create_form': createform,
     'group': sel_group,
   }
