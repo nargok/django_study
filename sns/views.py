@@ -90,7 +90,7 @@ def groups(request):
         vlist.append(item.user.username)
       # フォームの用意
       groupsform = GroupSelectForm(request.user, request.POST)
-      friendform = FriendsForm(request.user, friends=friends, vals=vlist)
+      friendsform = FriendsForm(request.user, friends=friends, vals=vlist)
 
     # Friendsのチェック更新時の処理
     if request.POST['mode'] == '__friends_form__':

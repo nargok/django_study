@@ -23,7 +23,7 @@
 <form action="{% url 'groups' %}" method="post">
     {% csrf_token %}
     <input type="hidden" name="mode" value="__groups_form__">
-    {{group_form}}
+    {{groups_form}}
     <button>select members</button>
 </form>
 <hr>
