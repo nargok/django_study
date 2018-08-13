@@ -18,6 +18,7 @@ h1 {
   margin-bottom: 0px;
   text-align: right;
   line-height: 70px;
+  z-index: 1;
 }
 p {
   margin: 10px;
@@ -57,6 +58,11 @@ table tr td {
   tod: 0px;
   width: 800px;
   margin: 8px;
+  z-index: 2;
+}
+
+.login_table tr td {
+  background-color: rgba(246, 246, 246, 0.4);
 }
 
 .login_table_inner {
