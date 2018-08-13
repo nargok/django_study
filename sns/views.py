@@ -258,7 +258,7 @@ def share(request, share_id):
 @login_required(login_url='/admin/login')
 def good(request, good_id):
   # goodするMessageを取得
-  good_msg = Message.object.get(id=good_id)
+  good_msg = Message.objects.get(id=good_id)
   # 自分がメッセージにGoodした数を調べる
   is_good = Good.objects.filter(owner=request.user) \
                           .filter(message=good_msg).count()
