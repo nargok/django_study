@@ -168,3 +168,14 @@ def add(request):
                    'を設定しました! groupページに移動して、\
                    追加したFriendをメンバーに設定してください')
   return redirect(to='/sns')
+
+# グループの作成処理
+@login_required(login_url='/admin/login/')
+def creategroup(request):
+  # Groupをつくり、Userとtitleを設定して保存する
+  gp = Group()
+  gp.owner = request.user
+  gp.title = request.POST['group_name']
+  gp.save()
+  messages.info(request, '新しいグループを作成しました')
+  return redirect(to='/sns/groups')
