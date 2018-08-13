@@ -21,6 +21,13 @@
 <form action="{% url 'index' %}" method="post">
     {% csrf_token %}
     <input type="hidden" name="mode" value="__search_form__">
+    {{search_form}}
+    <button>Search</button>
+</form>
+<hr>
+<form action="{% url 'index' %}" method="post">
+    {% csrf_token %}
+    <input type="hidden" name="mode" value="__check_form__">
     {{check_form}}
     <button>update</button>
 </form>

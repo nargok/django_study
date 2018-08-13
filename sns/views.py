@@ -39,6 +39,7 @@ def index(request):
       checkform = GroupCheckForm(request.user)
       # Groupのリストを取得
       gps = Group.objects.filter(owner=request.user)
+      glist= [public_group]
       for item in gps:
         glist.append(item)
       # メッセージを取得
